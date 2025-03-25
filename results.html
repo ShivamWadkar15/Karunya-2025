@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results - Diabetes Health Hub</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #e3f2fd, #fff);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #4caf50;
+        }
+
+        .card {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 10px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #chartContainer {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        canvas {
+            width: 100% !important;
+            max-width: 600px;
+            height: 300px !important;
+        }
+
+        #glucoseForm {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        input {
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            width: 120px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background: #ff6f00;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #ff9800;
+        }
+
+        #downloadBtn {
+            background: #4caf50;
+            margin-top: 20px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body onload="loadResults()">
+
+    <div class="container" id="resultsContent">
+        <h1>📊 Your Glucose Report</h1>
+
+        <div class="card">
+            <h3>📄 User Info</h3>
+            <p><strong>Name:</strong> <span id="userName">User</span></p>
+            <p><strong>Email:</strong> <span id="userEmail">Email not provided</span></p>
+            <p><strong>Phone:</strong> <span id="userPhone">Phone not provided</span></p>
+        </div>
+        
+
+        <div class="card">
+            <h3>📝 Assessment Results</h3>
+            <p id="assessmentAnswers">No assessment data found.</p>
+        </div>
+
+        <div class="card">
+            <h3>📚 Previous Reports</h3>
+            <div id="reportHistory">No previous reports available.</div>
+        </div>
+
+        <div id="chartContainer" class="card">
+            <h3>📊 Glucose Levels Over Time</h3>
+            <canvas id="glucoseChart"></canvas>
+
+            <form id="glucoseForm">
+                <input type="number" id="glucoseValue" placeholder="Glucose Value" required />
+                <input type="date" id="glucoseDate" required />
+                <button type="button" onclick="addGlucoseData()">➕ Add</button>
+            </form>
+        </div>
+
+        <button id="downloadBtn" onclick="generatePDF()">📥 Download Full Report</button>
+    </div>
+
+    <script>
+        let glucoseData = JSON.parse(localStorage.getItem('glucoseData')) || [];
+
+        function loadResults() {
+        // Correctly fetching name, email, and phone from localStorage
+            document.getElementById('userName').innerText = localStorage.getItem('username') || 'User';
+            document.getElementById('userEmail').innerText = localStorage.getItem('useremail') || 'Email not provided';
+            document.getElementById('userPhone').innerText = localStorage.getItem('userphone') || 'Phone not provided';
+
+        // Load assessment results
+            const assessmentAnswers = localStorage.getItem('assessmentAnswers') || 'No assessment available.';
+            document.getElementById('assessmentAnswers').innerHTML = assessmentAnswers;
+
+        // Load report and glucose chart data
+            loadReportHistory();
+            loadGlucoseChart();
+        }
+
+
+
+        function loadReportHistory() {
+            const reportHistory = JSON.parse(localStorage.getItem('reportHistory')) || [];
+            const reportSection = document.getElementById('reportHistory');
+            reportSection.innerHTML = reportHistory.length === 0 ? 'No previous reports available.' : reportHistory.map(report =>
+                `<div class="card">
+                    <p><strong>Date:</strong> ${report.date}</p>
+                    <p><strong>Glucose:</strong> ${report.value} mg/dL</p>
+                </div>`
+            ).join('');
+        }
+
+        function addGlucoseData() {
+            const value = document.getElementById('glucoseValue').value;
+            const date = document.getElementById('glucoseDate').value;
+
+            if (!value || !date) {
+                alert('Please enter glucose value and date.');
+                return;
+            }
+
+            glucoseData.push({ date, value: parseInt(value) });
+            localStorage.setItem('glucoseData', JSON.stringify(glucoseData));
+            loadGlucoseChart();
+            loadReportHistory();
+        }
+
+        function loadGlucoseChart() {
+            const ctx = document.getElementById('glucoseChart').getContext('2d');
+            const dates = glucoseData.map(item => item.date);
+            const values = glucoseData.map(item => item.value);
+
+            if (window.glucoseChartInstance) {
+                window.glucoseChartInstance.destroy();
+            }
+
+            window.glucoseChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: 'Glucose Level (mg/dL)',
+                        data: values,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: '#ff6f00',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: 50,
+                            max: 300
+                        }
+                    }
+                }
+            });
+        }
+
+        function generatePDF() {
+            const element = document.getElementById('resultsContent');
+            html2pdf(element, {
+                margin: 10,
+                filename: 'Diabetes_Report.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            });
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up / Login | Diabetes Health Hub</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #e3f2fd, #fff);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ff6f00;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        input,
+        select,
+        textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .btn-submit {
+            padding: 12px;
+            background: linear-gradient(to right, #ff6f00, #ff9800);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 111, 0, 0.4);
+        }
+
+        .switch-form {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .switch-form a {
+            color: #ff6f00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .switch-form a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container" id="signupForm">
+        <h1>🚀 Create Account</h1>
+        <form id="registerForm">
+            <label for="name">👤 Name:</label>
+            <input type="text" id="name" required>
+
+            <label for="age">🎂 Age:</label>
+            <input type="number" id="age" required>
+
+            <label for="contact">📱 Contact No:</label>
+            <input type="text" id="contact" required>
+
+            <label for="email">📧 Email:</label>
+            <input type="email" id="email" required>
+
+            <label for="address">🏡 Address:</label>
+            <textarea id="address" rows="2" required></textarea>
+
+            <label for="weight">⚖️ Weight (kg):</label>
+            <input type="number" id="weight" required>
+
+            <label for="height">📏 Height (cm):</label>
+            <input type="number" id="height" required>
+
+            <label for="condition">🩺 Medical Conditions (if any):</label>
+            <textarea id="condition" rows="2"></textarea>
+
+            <label for="password">🔐 Create Password:</label>
+            <input type="password" id="password" required>
+
+            <button type="submit" class="btn-submit">✅ Sign Up</button>
+        </form>
+
+        <div class="switch-form">
+            Already have an account? <a href="#" onclick="showLogin()">Login Here</a>
+        </div>
+    </div>
+
+    <!-- Login Form -->
+    <div class="container" id="loginForm" style="display: none;">
+        <h1>🔐 Login</h1>
+        <form id="loginFormEl">
+            <label for="loginEmail">📧 Email:</label>
+            <input type="email" id="loginEmail" required>
+
+            <label for="loginPassword">🔐 Password:</label>
+            <input type="password" id="loginPassword" required>
+
+            <button type="submit" class="btn-submit">🚀 Login</button>
+        </form>
+
+        <div class="switch-form">
+            Don't have an account? <a href="#" onclick="showSignUp()">Sign Up</a>
+        </div>
+    </div>
+
+    <script>
+        // Show Sign Up Form
+        function showSignUp() {
+            document.getElementById('signupForm').style.display = 'block';
+            document.getElementById('loginForm').style.display = 'none';
+        }
+
+        // Show Login Form
+        function showLogin() {
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+        }
+
+        // Handle Sign Up
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const userData = {
+                name: document.getElementById('name').value,
+                age: document.getElementById('age').value,
+                contact: document.getElementById('contact').value,
+                email: document.getElementById('email').value,
+                address: document.getElementById('address').value,
+                weight: document.getElementById('weight').value,
+                height: document.getElementById('height').value,
+                condition: document.getElementById('condition').value,
+                password: document.getElementById('password').value
+            };
+
+            localStorage.setItem(userData.email, JSON.stringify(userData));
+            alert('✅ Account Created Successfully! Please Login.');
+            showLogin();
+        });
+
+        // Handle Login
+        document.getElementById('loginFormEl').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            const storedUser = JSON.parse(localStorage.getItem(email));
+
+            if (storedUser && storedUser.password === password) {
+                alert(`🎉 Welcome back, ${storedUser.name}!`);
+                localStorage.setItem('currentUser', JSON.stringify(storedUser));
+                window.location.href = 'book-test.html';
+            } else {
+                alert('❌ Invalid email or password!');
+            }
+        });
+    </script>
+</body>
+
+</html>

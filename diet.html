@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Diabetes Health Hub</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lato:wght@300;400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #e3f2fd, #fff);
+            margin: 0;
+            padding: 0;
+        }
+
+        .banner {
+            background: linear-gradient(135deg, #4caf50, #81c784);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+            border-radius: 20px;
+            margin: 20px auto;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .banner h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .banner p {
+            font-size: 1.1rem;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 40px auto;
+            padding: 0 5%;
+            max-width: 1200px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 60px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        #logout {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 10px 20px;
+            background: #ff4d4d;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Logout Button -->
+    <button id="logout" onclick="logout()">Logout</button>
+
+    <!-- Welcome Banner -->
+    <section class="banner">
+        <h1>👋 Welcome back, <span id="username">User</span>!</h1>
+        <p>Explore scientifically proven tips to manage your glucose levels effectively.</p>
+    </section>
+
+    <!-- Cards Container -->
+    <section class="card-container">
+        <!-- Card 1: Muscle Mass -->
+        <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/2731/2731353.png" alt="Muscle Mass">
+            <h3>💪 Muscle Mass</h3>
+            <p>Higher muscle mass improves insulin sensitivity and lowers diabetes risk.</p>
+        </div>
+
+        <!-- Card 2: Natural Fruits -->
+        <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/706/706195.png" alt="Natural Fruits">
+            <h3>🍎 Natural Fruits</h3>
+            <p>Whole fruits reduce diabetes risk. Blueberries lower Type 2 diabetes risk.</p>
+        </div>
+
+        <!-- Card 3: Vinegar Consumption -->
+        <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/2814/2814902.png" alt="Vinegar">
+            <h3>🧴 Vinegar Use</h3>
+            <p>Vinegar lowers post-meal glucose levels and improves insulin sensitivity.</p>
+        </div>
+
+        <!-- Card 4: Meal Sequencing -->
+        <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/2920/2920388.png" alt="Meal Sequencing">
+            <h3>🍽️ Meal Sequence</h3>
+            <p>Veggies before carbs reduce glucose spikes by 29%, enhancing control.</p>
+        </div>
+
+        <!-- Card 5: Walk After Meals -->
+        <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/3141/3141816.png" alt="Exercise">
+            <h3>🚶 Walk After Meals</h3>
+            <p>Walking for 15 minutes after meals lowers glucose levels by 22%.</p>
+        </div>
+
+        <!-- Card 6: Portion Control -->
+        <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/4208/4208433.png" alt="Portion Control">
+            <h3>🍲 Portion Control</h3>
+            <p>Smaller portions improve glucose regulation and calorie balance.</p>
+        </div>
+
+        <!-- Card 7: Hydration -->
+        <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/1616/1616438.png" alt="Hydration">
+            <h3>💧 Hydration</h3>
+            <p>Increased water intake reduces the risk of hyperglycemia by 21%.</p>
+        </div>
+
+        <!-- Card 8: Weight Loss -->
+        <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/4192/4192760.png" alt="Weight Loss">
+            <h3>⚖️ Weight Loss</h3>
+            <p>5-10% weight loss improves insulin resistance and glucose control.</p>
+        </div>
+
+        <!-- Card 9: Fiber Intake -->
+        <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/850/850932.png" alt="Fiber">
+            <h3>🥗 Fiber Intake</h3>
+            <p>Higher fiber intake slows glucose absorption and controls spikes.</p>
+        </div>
+
+        <!-- Card 10: Stress Management -->
+        <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/4233/4233421.png" alt="Stress Management">
+            <h3>🧘 Stress Management</h3>
+            <p>Reduced stress improves glucose regulation and insulin sensitivity.</p>
+        </div>
+
+        <!-- Card 11: Sleep Quality -->
+        <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/5269/5269125.png" alt="Sleep">
+            <h3>🌙 Sleep Quality</h3>
+            <p>Better sleep quality supports glucose balance and insulin function.</p>
+        </div>
+
+        <!-- Card 12: Green Tea -->
+        <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/3079/3079357.png" alt="Green Tea">
+            <h3>🍵 Green Tea</h3>
+            <p>Green tea improves insulin sensitivity and supports glucose control.</p>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const username = localStorage.getItem("username") || "User";
+            document.getElementById("username").innerText = username;
+        });
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+
+</html>

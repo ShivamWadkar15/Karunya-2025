@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Health Hub</title>
+    <style>
+        /* Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #d0ff9b;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: url('https://source.unsplash.com/1600x900/?health,medical') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #000000;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #ff6f00, #ff9800);
+            color: white;
+            border-radius: 8px;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(255, 111, 0, 0.6);
+        }
+
+        /* Stats Section */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 50px 20px;
+            background: #f1f8e9;
+        }
+
+        .stat-card {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            width: 30%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card h2 {
+            font-size: 2.5rem;
+            color: #4caf50;
+        }
+
+        .stat-card p {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        /* Why Test Section */
+        .why-test {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .why-test h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .why-test p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .btn-glow {
+            padding: 12px 24px;
+            background: linear-gradient(to right, #4caf50, #81c784);
+            color: white;
+            border-radius: 8px;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-glow:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.6);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div>
+            <h1>🩺 Take Control of Your Health</h1>
+            <p>Understand and manage diabetes effectively with AI-powered insights.</p>
+            <a href="assessment.html" class="btn">🚀 Take Assessment</a>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stat-card">
+            <h2>422M+</h2>
+            <p>People affected by diabetes worldwide.</p>
+        </div>
+        <div class="stat-card">
+            <h2>50%+</h2>
+            <p>Cases go undiagnosed leading to severe complications.</p>
+        </div>
+        <div class="stat-card">
+            <h2>97%</h2>
+            <p>Users saw positive results using AI-based diet plans.</p>
+        </div>
+    </section>
+
+    <!-- Why Test Section -->
+    <section class="why-test">
+        <h2>🧐 Why Should You Take the Test?</h2>
+        <p>Discover your risk factors and take preventive measures before it's too late.</p>
+        <!-- <a href="assessment.html" class="btn-glow">⚡ Start Now</a> -->
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Diabetes Health Hub | All Rights Reserved.</p>
+    </footer>
+
+    <!-- JS for Animations and Effects -->
+    <script>
+        // // Hero Animation
+        // document.querySelector('.hero').addEventListener('mousemove', (e) => {
+        //     const x = (window.innerWidth - e.pageX * 2) / 90;
+        //     const y = (window.innerHeight - e.pageY * 2) / 90;
+        //     document.querySelector('.hero').style.transform = `translate(${x}px, ${y}px)`;
+        // });
+
+        // Scroll Reveal Animation
+        window.addEventListener('scroll', () => {
+            const stats = document.querySelectorAll('.stat-card');
+            const revealPoint = 150;
+
+            stats.forEach((stat) => {
+                const statTop = stat.getBoundingClientRect().top;
+
+                if (statTop < window.innerHeight - revealPoint) {
+                    stat.style.transform = 'translateY(0)';
+                    stat.style.opacity = '1';
+                } else {
+                    stat.style.transform = 'translateY(30px)';
+                    stat.style.opacity = '0';
+                }
+            });
+        });
+
+        // Initial Load Animation
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.stat-card').forEach((stat) => {
+                stat.style.transition = 'transform 0.5s ease-out, opacity 0.5s ease-out';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Diabetes Health Hub</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lato:wght@300;400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uiverse/1.0.1/uiverse.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #e3f2fd, #fff);
+            margin: 0;
+            padding: 0;
+        }
+
+        .banner {
+            background: linear-gradient(135deg, #4caf50, #81c784);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            border-radius: 20px;
+            margin: 20px auto;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: glow 3s infinite alternate;
+        }
+
+        .banner h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+
+        .banner p {
+            font-size: 1.2rem;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card img {
+            width: 60px;
+            margin-bottom: 10px;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+        }
+
+        .btn-glow {
+            padding: 12px 24px;
+            background: linear-gradient(to right, #ff6f00, #ff9800);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 12px rgba(255, 111, 0, 0.4);
+        }
+
+        .btn-glow:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 111, 0, 0.6);
+        }
+
+        #logout {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 10px 20px;
+            background: #ff4d4d;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .success-container {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .success-container h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .success-card {
+            background: #f1f8e9;
+            padding: 20px;
+            border-radius: 12px;
+            width: 280px;
+            margin: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .success-card img {
+            width: 60px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .success-card h4 {
+            margin: 10px 0 5px;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 20px #4caf50;
+            }
+
+            to {
+                box-shadow: 0 0 30px #81c784;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Logout Button -->
+    <button id="logout" onclick="logout()">Logout</button>
+
+    <!-- Welcome Banner -->
+    <section class="banner">
+        <h1>👋 Welcome back, <span id="username">User</span>!</h1>
+        <p>Here's your latest health information and resources.</p>
+    </section>
+
+    <!-- Card Container - Diet, Exercise, AI Chatbot -->
+    <section class="card-container">
+        <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" alt="Diet">
+            <h3>🥗 Personalized Diet Plan</h3>
+            <p>Get customized diet suggestions to maintain balanced sugar levels.</p>
+            <button onclick="navigateTo('diet.html')" class="btn-glow">Explore Diet</button>
+        </div>
+
+        <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/1666/1666826.png" alt="Exercise">
+            <h3>🏃 Exercise Recommendations</h3>
+            <p>Discover the best exercises to regulate blood sugar levels.</p>
+            <button onclick="navigateTo('exercise.html')" class="btn-glow">Check Exercises</button>
+        </div>
+
+        <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/2099/2099058.png" alt="AI Chatbot">
+            <h3>🤖 AI Health Chatbot</h3>
+            <p>Ask AI-powered questions about diabetes and glucose levels.</p>
+            <button onclick="navigateTo('chatbot.html')" class="btn-glow">Chat Now</button>
+        </div>
+    </section>
+
+    <!-- Card Container - Booking, Results, Test -->
+    <section class="card-container">
+        <div class="card">
+            <h3>📅 Your Booking Details</h3>
+            <p id="bookingDetails">No upcoming bookings.</p>
+        </div>
+
+        <div class="card">
+            <h3>📊 View Results</h3>
+            <p>Check your latest glucose analysis and trends.</p>
+            <button onclick="navigateTo('results.html')" class="btn-glow">View Results</button>
+        </div>
+
+        <div class="card">
+            <h3>🔄 Book Another Test</h3>
+            <p>Ready for your next assessment?</p>
+            <button onclick="navigateTo('book-test.html')" class="btn-glow">Book Test</button>
+        </div>
+    </section>
+
+    <!-- Success Stories Section -->
+    <section class="success-container">
+        <h2>🎉 Success Stories</h2>
+        <div class="card-container">
+            <div class="success-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" alt="User 1">
+                <h4>Ramesh Kumar</h4>
+                <p>"With personalized diet and exercise plans, my sugar levels are finally under control!"</p>
+            </div>
+
+            <div class="success-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/2922/2922520.png" alt="User 2">
+                <h4>Neha Sharma</h4>
+                <p>"AI chatbot provided instant suggestions that helped me manage diabetes better."</p>
+            </div>
+
+            <div class="success-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/2922/2922656.png" alt="User 3">
+                <h4>Amit Patel</h4>
+                <p>"Regular monitoring and test reminders have helped me stay on track with my health goals."</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const bookingDetails = JSON.parse(localStorage.getItem("bookingDetails"));
+            const username = localStorage.getItem("username") || "User";
+
+            document.getElementById("username").innerText = username;
+
+            if (bookingDetails) {
+                document.getElementById("bookingDetails").innerHTML = `
+                    <strong>👨‍⚕️ Doctor:</strong> ${bookingDetails.doctorName}<br>
+                    <strong>📧 Email:</strong> ${bookingDetails.email}<br>
+                    <strong>📱 Phone:</strong> ${bookingDetails.phone}<br>
+                    <strong>🏡 Address:</strong> ${bookingDetails.address}<br>
+                    <strong>🧪 Tests:</strong> ${bookingDetails.tests.join(", ")}<br>
+                    <strong>💰 Price:</strong> ${bookingDetails.price}
+                `;
+            } else {
+                document.getElementById("bookingDetails").innerHTML = "No upcoming bookings.";
+            }
+        });
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = "index.html";
+        }
+
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+    </script>
+</body>
+
+</html>
